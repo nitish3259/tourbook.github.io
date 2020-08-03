@@ -1,0 +1,35 @@
+<%-include("../partials/header")%>
+
+<div class="container">
+	<% campground.hotels.forEach(function(hotel){ %>
+		<div class="row">
+		<div class="col-md-4">
+			<h1><%=hotel.name %></h1>
+			<div class="thumbnail">
+				<img src="<%= hotel.image %>" alt="hotel's Image">
+			</div>
+		</div>
+		<div class="col-md-8">
+			<h2>About <%=hotel.name %></h2>
+			<ul>
+				<li><strong>located in-> </strong><em><%= hotel.address %></em></li>
+				<li><strong>Price-></strong>$<%= hotel.price %>/night</li>
+				<li><strong>Uploaded By-></strong><em><%= hotel.author.username %></em></li>
+				<li><strong>Created-></strong><%= moment(hotel.createdAt).fromNow() %></li>
+				<li><a href="http://<%= hotel.url %>" >Click Here To Visit Website</a></li>
+	 <a class="btn btn-xs btn-warning" href="/campgrounds/<%=campground._id%>/hotels/<%=hotel._id %>/edit"> EDIT</a>
+	<form class="delete-form" action="/campgrounds/<%=campground._id %>/hotels/<%=hotel._id%>?_method=DELETE" method="POST"> 
+		   <button class="btn btn-xs btn-danger">
+			      DELETE
+			</button>
+			</form>
+			</ul>
+		</div>
+	</div>
+	<% }) %>
+</div>
+
+<%-include("../partials/footer")%>
+
+
+

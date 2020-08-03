@@ -1,0 +1,45 @@
+<%-include("../partials/header")%>
+
+<div class="container">
+	<header class="jumbotron">
+		<div class="container">
+	      <h1>
+	        <%=campground.name %>
+          </h1>
+		  <p>
+			View All Related Pictures
+		  </p>
+		  <p>
+	      <a class="btn btn-primary btn-lg" href="/campgrounds/<%= campground._id %>/pictures/new">Add new Picture</a>
+		  </p>
+		</div>
+   </header>
+
+   <div class="row text-center" style="dispaly:flex;flex-wrap:wrap;">
+	   <% campground.pictures.forEach(function(picture){ %>
+	   <div class="col-md-3 col-sm-6">
+	      <div class="thumbnail">
+			  <img src="<%=picture.image%>">
+			  <div class="caption">
+				  <h4>
+					  uploaded by <%= picture.author.username %>,<%= moment(picture.createdAt).fromNow() %>
+				  </h4>
+				  <h4>
+					  <%=picture.description%>
+				  </h4>
+			  </div>
+			  <p>
+<a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/pictures/<%=                                  picture._id %>/edit ">EDIT</a>
+<form class="delete-form" action="/campgrounds/<%=campground._id %>/pictures/<%=picture._id%>?_method=DELETE" method="POST"> 
+			<button class="btn btn-danger">
+			  DELETE
+		    </button>
+</form> 
+			  </p>
+		   </div>
+       </div>
+   <% }); %>
+   </div>
+</div>
+
+<%-include("../partials/footer")%>

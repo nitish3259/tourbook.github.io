@@ -1,0 +1,48 @@
+<%-include("../partials/header")%>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<h1><%=user.first_name + " " + user.last_name %></h1>
+			<div class="thumbnail">
+				<img src="<%= user.avatar %>" alt="user's profile picture">
+				<div class="caption">
+					<a href="mailto:<%= user.email %>"><%= user.email %></a>
+				</div>
+			</div>
+					"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+		</div>
+		<div class="col-md-4">
+			<h3><%= user.username %>'s activities:</h3>
+			<ul>
+				<% user.activity.forEach(function(activity){ %>
+					<li><strong><%= activity %></strong></li>
+				<% }); %>
+			</ul>
+			<%
+			var already_a_follower=false;
+	        user.followers.forEach(function(follower_id){
+		        if(currentUser && follower_id.equals(currentUser._id)){
+			        already_a_follower=true;
+		         }
+	        });
+			%>
+			<% if(currentUser && !user._id.equals(currentUser._id) && !already_a_follower){ %>
+			<a href="/follow/<%= user.id %>"><button class="btn btn-primary">Follow <%= user.username %></button></a>
+			<% } %>
+			<% if(currentUser && !user._id.equals(currentUser._id) && already_a_follower){ %>
+			<a href="/unfollow/<%= user.id %>"><button class="btn btn-danger">UnFollow <%= user.username %></button></a>
+			<% } %>
+		</div>
+		<div class="col-md-4">
+			<h3><%= user.username %>'s followers:</h3>
+			<ul>
+				<% user.followers.forEach(function(follower){ %>
+					<li><a href="/users/<%= follower._id %>"><strong><%= follower.username %></strong></a></li>
+				<% }); %>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<%-include("../partials/footer")%>

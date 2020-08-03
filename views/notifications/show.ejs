@@ -1,0 +1,31 @@
+<%-include("../partials/header")%> 
+
+<h1>Notifications</h1>
+
+<ul>
+	<% Notifications.forEach(function(notification) { %>
+	<li>
+		<% if(notification.activity!=="deleted" && notification.activity!=="deleted a comment on"){%>
+			<a href="/campgrounds/<%= notification.campgroundId %>">
+			<%= notification.username %> <%= notification.activity %>  
+				<% if(notification.activity==="created" || notification.activity==="commented"){%>
+				a new
+				<%}%>
+				<% if(notification.activity==="commented"){%>
+				a comment on
+				<% } %>
+				campground
+		    </a>
+		<%}else{%>
+			<%= notification.username %> <%= notification.activity %> a
+				<% if(notification.activity==="created"){%> 
+			    new
+				<%}%>
+				campground
+		<%}%>
+	</li>
+	<% }); %>
+</ul>
+
+<%-include("../partials/footer")%>
+
